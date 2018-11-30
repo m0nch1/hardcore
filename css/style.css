@@ -1,0 +1,299 @@
+html{
+    width: 100%;
+    height: 100%;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    background-image: url(../img/landscape.jpg);
+    background-size: 110em auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #464646;
+    -webkit-animation: bg-sway 10s infinite linear alternate; 
+    animation: bg-sway 10s infinite linear alternate; 
+}
+
+section{
+    width: 50%;
+    height: 50%;
+    position: relative;
+}
+
+#lp{
+    -webkit-animation: left-in 3s ease-in-out, horizontal 1.5s ease-in-out infinite alternate;
+    animation: left-in 3s ease-in-out, horizontal 1.5s ease-in-out infinite alternate;
+}
+
+#lp::after{
+    box-sizing: inherit;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: center;
+    border-right: 4px solid white;
+    visibility: hidden;
+    animation: line-fade 2s ease 3s forwards;
+}
+
+#cap{
+    margin: 0 auto;
+    -webkit-animation: right-in 3s ease-in-out, horizontal 1.5s ease-in-out infinite alternate;
+    animation: right-in 3s ease-in-out, horizontal 1.5s ease-in-out infinite alternate;
+}
+
+.lpimg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    margin: 0 auto;
+    -webkit-animation: vertical 1s ease-in-out infinite alternate;
+    animation: vertical 1s ease-in-out infinite alternate;
+}
+
+.lpimg img{
+    width: 100%;
+    box-shadow: 0px 0px 25px 5px;
+}
+
+.lpdesc{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.lpdesc p{
+    margin: 0;
+    text-align: center;
+    font-family: 'Contrail One', cursive;
+    color: white;
+}
+
+
+.audios{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+
+.audios img{
+    padding: 0 10px;
+}
+
+.lpdesc p:first-child{
+    font-size: 3vw;
+}
+
+.artist{
+    font-size: 5vw;
+}
+
+.title{
+    font-size: 3vw;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+.canbox{
+    text-align: center;
+}
+
+#visualizer{
+    display: inline-block;
+    position: inherit;
+    margin-top: 20px;
+    width: 85%;
+    height: 60px;
+}
+
+#sc_url{
+    font-size: 25px;
+    color: #444;
+    padding: 6px;
+    width: 100%;
+    margin: 0 auto;
+
+}
+
+#sc_send{
+    display: block;
+    margin: 20px auto;
+    background-color: transparent;
+    padding: 10px;
+    border-style: solid;
+    border-color: transparent;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    cursor: pointer;
+}
+
+/* modal */
+.modal_wrap #trigger{
+    display: none;
+}
+
+.modal_overlay{
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+    transition: opacity 0.5s, transform 0s 0.5s;
+    transform: scale(0);
+}
+
+.modal_trigger{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.modal_content{
+    position: relative;
+    align-self: center;
+    width: 60%;
+    max-width: 800px;
+    padding: 30px 30px 15px;
+    box-sizing: border-box;
+    background: #fff;
+    line-height: 1.4em;
+    transition: 0.5s;
+}
+
+.close_button{
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal_wrap input:checked ~ .modal_overlay{
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.5s;
+}
+
+.open_button{
+    cursor: pointer;
+}
+
+/* animation */
+@keyframes horizontal {
+    0% { -webkit-transform:translateX( -8px); }
+  100% { -webkit-transform:translateX(  0px); }
+}
+@-webkit-keyframes horizontal {
+    0% { -webkit-transform:translateX( -8px); }
+  100% { -webkit-transform:translateX(  0px); }
+}
+
+@keyframes vertical {
+    0% { -webkit-transform:translate(-50%,-50%); }
+  100% { -webkit-transform:translate(-50%,-55%); }
+}
+@-webkit-keyframes vertical {
+    0% { -webkit-transform:translate(-50%,-50%); }
+  100% { -webkit-transform:translate(-50%,-55%); }
+}
+
+@keyframes bg-sway {
+    0% { background-position: 50% 50%; }
+    10% { background-position: 45% 55%; }
+    20% { background-position: 45% 60%; }
+    30% { background-position: 50% 65%; }
+    40% { background-position: 55% 60%; }
+    50% { background-position: 55% 55%; }
+    60% { background-position: 45% 45%; }
+    70% { background-position: 45% 40%; }
+    80% { background-position: 50% 35%; }
+    90% { background-position: 55% 40%; }
+    100% { background-position: 55% 45%; }
+}
+@-webkit-keyframes bg-sway {
+    0% { background-position: 50% 50%; }
+    10% { background-position: 45% 55%; }
+    20% { background-position: 45% 60%; }
+    30% { background-position: 50% 65%; }
+    40% { background-position: 55% 60%; }
+    50% { background-position: 55% 55%; }
+    60% { background-position: 45% 45%; }
+    70% { background-position: 45% 40%; }
+    80% { background-position: 50% 35%; }
+    90% { background-position: 55% 40%; }
+    100% { background-position: 55% 45%; }
+}
+
+@keyframes left-in {
+    0%{ left: -700px; }
+    100%{ left: 0; }
+}
+@-webkit-keyframes left-in {
+    0%{ left: -700px; }
+    100%{ left: 0; }
+}
+
+@keyframes right-in {
+    0%{ right: -700px; }
+    100%{ right: 0; }
+}
+@-webkit-keyframes right-in {
+    0%{ right: -700px; }
+    100%{ right: 0; }
+}
+
+@keyframes line-fade {
+    0%{ transform: scale3d(1,0,1); visibility: visible; }
+    100%{ transform: scale3d(1,1,1); visibility: visible;}
+}
+
+@keyframes line-fade-b {
+    0%{ transform: scale3d(0,1,1); visibility: visible; }
+    100%{ transform: scale3d(1,1,1); visibility: visible;}
+}
+
+/* media query */
+
+@media screen and (max-width: 767px){
+    body{
+        display: inherit;
+    }
+    section {
+        margin: 0 auto;
+        width: 80%;
+    }
+    .lpdesc p:first-child{
+        font-size: 5vw;
+    }
+    .artist{
+        font-size: 7vw;
+    }
+    .title{
+        font-size: 5vw;
+    }
+    #lp::after {
+        border-right:none;
+        border-bottom: 4px solid white;
+        animation: line-fade-b 2s ease 3s forwards;
+    }
+}
