@@ -9,11 +9,15 @@ analyser.connect(audioContext.destination);
 let gainNode = audioContext.createGain();
 gainNode.connect(analyser); 
 
+let audioTag = document.getElementById('usermusic');
+source = audioContext.createMediaElementSource(audioTag);
+source.connect(gainNode);
+
 let canvas        = document.getElementById('visualizer');
 let canvasContext = canvas.getContext('2d');
 canvas.setAttribute('width', analyser.frequencyBinCount * 10);
 
-let render = function(){
+render = function(){
   let spectrums = new Uint8Array(analyser.frequencyBinCount);
   analyser.getByteFrequencyData(spectrums);
 　
@@ -54,35 +58,39 @@ function execDrop(e) {
 
   if (mimecheck.startsWith('audio')) {
     document.getElementById('output').innerHTML = files[0].name;
+    let url = URL.createObjectURL(files[0]);
+    audioTag.setAttribute("src" , url);
     fileReader.readAsArrayBuffer(files[0]);
-    source = audioContext.createBufferSource();
+   
   }
 
   fileReader.onload = function(){
 
     audioContext.decodeAudioData(fileReader.result, function(buffer){
 
-      
-      source.buffer = buffer;
-      source.connect(gainNode);
-      source.start(0,0);
-      
+     // source.buffer = buffer;
+      //source.start(0,0);
+      //source.play();
+
       animationId = requestAnimationFrame(render);
         
       let pausebtn = document.getElementById('mplaypause')
+      let isPlay = false;
 
       pausebtn.addEventListener("click", function(event){
-        if(audioContext.state === 'running') {
-          pausebtn.setAttribute("src" , "img/Orion_play.png");
-          audioContext.suspend();
-          gainNode.gain.value = 0;
-          animationId = requestAnimationFrame(render);
-        } else if(audioContext.state === 'suspended') {
-          pausebtn.setAttribute("src" , "img/Orion_pause.png");
-          audioContext.resume();
-          gainNode.gain.value = 1;
-          animationId = requestAnimationFrame(render);
-        }
+        audioTag[!isPlay ? 'play' : 'pause']();
+        isPlay = !isPlay;
+        // if(audioContext.state === 'running') {
+        //   pausebtn.setAttribute("src" , "img/Orion_play.png");
+        //   audioContext.suspend();
+        //   gainNode.gain.value = 0;
+        //   canselAnimationFrame(animationId);
+        // } else if(audioContext.state === 'suspended') {
+        //   pausebtn.setAttribute("src" , "img/Orion_pause.png");
+        //   audioContext.resume();
+        //   gainNode.gain.value = 1;
+        //   animationId = requestAnimationFrame(render);
+        // }
       });
 
     });
