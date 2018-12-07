@@ -36,15 +36,13 @@ function execDrop(e) {
   }
 }
 
-let isPlay = true;
+let isPlay = false;
 
 pausebtn.addEventListener("click", function(event){
   if (!isPlay) {
-    console.log("play");
     audioTag.play();
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
   } else {
-    console.log("pause");
     audioTag.pause();
     pausebtn.setAttribute("src" , "img/Orion_play.png");
   }
