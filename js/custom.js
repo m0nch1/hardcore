@@ -78,3 +78,62 @@ render = function(){
 };
 
 animationId = requestAnimationFrame(render);
+
+//https://spotify-web-playback.glitch.me/#
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+
+  let spimport = document.getElementById(sp_send);
+  sp_send.addEventListener("click", function(event){
+    
+    let player = new Spotify.Player({
+      name: 'A Spotify Web SDK Player',
+      getOAuthToken: callback => {
+        callback('BQA4HFm6EL9Z5Gb23m83w8B2zZVOmq4ljtsRXLSXBHvKkQyOFIPjIZNfdyjP2Pf_BIngSo13B2gGjqD8PVUxAdDPz8XQ0a_CI9ePfoSbz_AIl7T_mOtLpcpisx7AUQGVn5D97ABfmOzxO7rrsVcjQ9rEjD1S-B95ZmcJxv7Nc9hJMK8eYAS2X4U-__Rl');
+      },
+      volume: 1
+    });
+  
+    player.addListener('ready', ({ device_id }) => {
+      console.log('Ready with Device ID', device_id);
+  
+      const play = ({
+        spotify_uri,
+        playerInstance: {
+          _options: {
+            getOAuthToken,
+            id
+          }
+        }
+      }) => {
+        getOAuthToken(access_token => {
+          fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ uris: [spotify_uri] }),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${access_token}`
+            },
+          });
+        });
+      };
+  
+      play({
+        playerInstance: player,
+        spotify_uri: 'spotify:track:4ykXvy9fdC8sowUXD9Q1Bp',
+      });
+  
+    });
+  
+    player.connect();
+  
+    player.on('player_state_changed', state => {
+      console.log(state)
+      document.getElementById('lpimg').setAttribute("src" , state.track_window.current_track.album.images[0].url);
+      let srcpath = document.getElementById('lpimg').getAttribute('src');
+      document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
+      document.getElementById('output').innerHTML = state.track_window.current_track.name;
+    });
+
+  });
+};

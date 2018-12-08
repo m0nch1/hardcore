@@ -121,7 +121,7 @@ canvas {
     height: 60px;
 }
 
-#sc_url{
+#sp_url{
     font-size: 25px;
     color: #444;
     padding: 6px;
@@ -130,7 +130,7 @@ canvas {
 
 }
 
-#sc_send{
+#sp_send{
     display: block;
     margin: 20px auto;
     background-color: transparent;
