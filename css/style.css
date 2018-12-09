@@ -15,8 +15,8 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-color: #464646;
-    -webkit-animation: bg-sway 10s infinite linear alternate; 
-    animation: bg-sway 10s infinite linear alternate; 
+    /* -webkit-animation: bg-sway 20s infinite linear alternate; 
+    animation: bg-sway 20s infinite linear alternate;  */
 }
 
 section{
@@ -89,6 +89,10 @@ section{
 
 .audios img{
     padding: 0 10px;
+}
+
+#mplaypause{
+    display: none;
 }
 
 .lpdesc p:first-child{

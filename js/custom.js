@@ -10,7 +10,7 @@ gainNode.connect(analyser);
 
 let audioTag = document.getElementById('usermusic');
 let pausebtn = document.getElementById('mplaypause')
-pausebtn.style.display ="none";
+//pausebtn.style.display ="none";
 
 source = audioContext.createMediaElementSource(audioTag);
 source.connect(gainNode);
