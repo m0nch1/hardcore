@@ -85,11 +85,43 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   let spimport = document.getElementById(sp_send);
   sp_send.addEventListener("click", function(event){
+
+    const hash = window.location.hash
+    .substring(1)
+    .split('&')
+    .reduce(function (initial, item) {
+      if (item) {
+        let parts = item.split('=');
+        initial[parts[0]] = decodeURIComponent(parts[1]);
+      }
+      return initial;
+    }, {});
+    window.location.hash = '';
+
+    // Set token
+    let _token = hash.access_token;
+
+    const authEndpoint = 'https://accounts.spotify.com/authorize';
+
+    // Replace with your app's client ID, redirect URI and desired scopes
+    const clientId = '285998fe3500467bb715878d0a767dbf';
+    const redirectUri = 'https://m0nch1.github.io/visual-mv/';
+    const scopes = [
+      'streaming',
+      'user-read-private',
+      'user-modify-playback-state',
+      'app-remote-control'
+    ];
+
+    // If there is no token, redirect to Spotify authorization
+    if (!_token) {
+      window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
+    }
     
     let player = new Spotify.Player({
       name: 'A Spotify Web SDK Player',
       getOAuthToken: callback => {
-        callback('BQA4HFm6EL9Z5Gb23m83w8B2zZVOmq4ljtsRXLSXBHvKkQyOFIPjIZNfdyjP2Pf_BIngSo13B2gGjqD8PVUxAdDPz8XQ0a_CI9ePfoSbz_AIl7T_mOtLpcpisx7AUQGVn5D97ABfmOzxO7rrsVcjQ9rEjD1S-B95ZmcJxv7Nc9hJMK8eYAS2X4U-__Rl');
+        callback(_token);
       },
       volume: 1
     });
@@ -106,13 +138,13 @@ window.onSpotifyWebPlaybackSDKReady = () => {
           }
         }
       }) => {
-        getOAuthToken(access_token => {
+        getOAuthToken(_token => {
           fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
             method: 'PUT',
             body: JSON.stringify({ uris: [spotify_uri] }),
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${access_token}`
+              'Authorization': `Bearer ${_token}`
             },
           });
         });

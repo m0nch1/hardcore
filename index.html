@@ -57,7 +57,7 @@
 
       function init(){
         // Canvas未サポート対応
-        //if (!window.HTMLCanvasElement) return;
+        if (!window.HTMLCanvasElement) return;
         
         // サイズを指定
         const width = window.innerWidth;
@@ -87,28 +87,28 @@
         camera.lookAt(scene.position);
         
         //ガイド線
-        // var gridHelper = new THREE.GridHelper(width, 5); // サイズ, 分割数
+        // let gridHelper = new THREE.GridHelper(width, 5); // サイズ, 分割数
         // scene.add(gridHelper);
         
-        // var axisHelper = new THREE.AxisHelper(width); // サイズ
+        // let axisHelper = new THREE.AxisHelper(width); // サイズ
         // scene.add(axisHelper);
 
         // コントロールカメラ
-        // var controlCamera = new THREE.PerspectiveCamera(35, width / height, 1, 6000);
+        // let controlCamera = new THREE.PerspectiveCamera(35, width / height, 1, 6000);
         // controlCamera.position.set(0, 500, 1600);
-        // var controls = new THREE.OrbitControls(controlCamera);
+        // let controls = new THREE.OrbitControls(controlCamera);
 
         const X_SIZE = window.innerWidth;
         const Y_SIZE = window.innerHeight;
         const LENGTH = 50;
         const PLANE_SCALE = 5;
 
-        var plane = [];
+        const plane = [];
 
-        for(var i=0; i<LENGTH; i++){
+        for(let i=0; i<LENGTH; i++){
 
-            var geometry = new THREE.PlaneGeometry( PLANE_SCALE, PLANE_SCALE );
-            var material = new THREE.MeshBasicMaterial({
+            let geometry = new THREE.PlaneGeometry( PLANE_SCALE, PLANE_SCALE );
+            let material = new THREE.MeshBasicMaterial({
                 color: 'white', 
                 side: THREE.DoubleSide, 
                 opacity: 0.7,
@@ -155,7 +155,7 @@
             // 原点方向を見つめる
             camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-            for(var i=0; i<LENGTH; i++){
+            for(let i=0; i<LENGTH; i++){
                 plane[i].rotation.y += (Math.random()*0.1);
                 plane[i].rotation.x += (Math.random()*0.1);
                 plane[i].rotation.z += (Math.random()*0.1);
