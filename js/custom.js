@@ -173,9 +173,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     pausebtn.addEventListener("click", function(event){
 
-      let check = pausebtn.getAttribute('src');
+      console.log(state);
 
-      if (check === 'img/Orion_play.png') {
+      if (state.paused) {
         player.resume().then(() => {
           pausebtn.setAttribute("src" , "img/Orion_pause.png");
         });
