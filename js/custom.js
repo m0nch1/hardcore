@@ -88,6 +88,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   sp_send.addEventListener("click", function(event){
 
     pausebtn.setAttribute("src" , "img/Orion_play.png");
+    pausebtn.style.display = "inline";
 
     const hash = window.location.hash
     .substring(1)
