@@ -84,7 +84,7 @@ animationId = requestAnimationFrame(render);
 
 window.onSpotifyWebPlaybackSDKReady = () => {
 
-  let _token;
+  var _token;
 
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
