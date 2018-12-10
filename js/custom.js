@@ -83,17 +83,14 @@ animationId = requestAnimationFrame(render);
 //https://spotify-web-playback.glitch.me/#
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-  
+
   var _token;
-  
+
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
-    
+
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
-    
-    // If there is no token, redirect to Spotify authorization
-    if (!_token) {
 
     const hash = window.location.hash
     .substring(1)
@@ -122,6 +119,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       'app-remote-control'
     ];
 
+    // If there is no token, redirect to Spotify authorization
+    if (!_token) {
+      console.log('!_token' + !_token)
       window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
     }
   });
