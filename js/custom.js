@@ -82,9 +82,9 @@ animationId = requestAnimationFrame(render);
 
 //https://spotify-web-playback.glitch.me/#
 
-window.onSpotifyWebPlaybackSDKReady = () => {
+var _token;
 
-  var _token;
+window.onSpotifyWebPlaybackSDKReady = () => {
 
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
@@ -92,32 +92,34 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
 
-    const hash = window.location.hash
-    .substring(1)
-    .split('&')
-    .reduce(function (initial, item) {
-      if (item) {
-        let parts = item.split('=');
-        initial[parts[0]] = decodeURIComponent(parts[1]);
-      }
-      return initial;
-    }, {});
-    window.location.hash = '';
+    if (!_token) {
+      const hash = window.location.hash
+      .substring(1)
+      .split('&')
+      .reduce(function (initial, item) {
+        if (item) {
+          let parts = item.split('=');
+          initial[parts[0]] = decodeURIComponent(parts[1]);
+        }
+        return initial;
+      }, {});
+      window.location.hash = '';
 
-    // Set token
-    _token = hash.access_token;
+      // Set token
+      _token = hash.access_token;
 
-    const authEndpoint = 'https://accounts.spotify.com/authorize';
+      const authEndpoint = 'https://accounts.spotify.com/authorize';
 
-    // Replace with your app's client ID, redirect URI and desired scopes
-    const clientId = '285998fe3500467bb715878d0a767dbf';
-    const redirectUri = 'https://m0nch1.github.io/visual-mv/';
-    const scopes = [
-      'streaming',
-      'user-read-private',
-      'user-modify-playback-state',
-      'app-remote-control'
-    ];
+      // Replace with your app's client ID, redirect URI and desired scopes
+      const clientId = '285998fe3500467bb715878d0a767dbf';
+      const redirectUri = 'https://m0nch1.github.io/visual-mv/';
+      const scopes = [
+        'streaming',
+        'user-read-private',
+        'user-modify-playback-state',
+        'app-remote-control'
+      ];
+    }
 
     // If there is no token, redirect to Spotify authorization
     if (!_token) {
