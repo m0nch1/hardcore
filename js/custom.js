@@ -84,6 +84,8 @@ animationId = requestAnimationFrame(render);
 
 window.onSpotifyWebPlaybackSDKReady = () => {
 
+  let _token;
+
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
 
@@ -103,7 +105,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     window.location.hash = '';
 
     // Set token
-    let _token = hash.access_token;
+    _token = hash.access_token;
 
     const authEndpoint = 'https://accounts.spotify.com/authorize';
 
