@@ -85,9 +85,9 @@ animationId = requestAnimationFrame(render);
 window.onSpotifyWebPlaybackSDKReady = () => {
 
   let spbtn = document.getElementById(sp_btn);
-  let spurl = document.getElementById(sp_url).value;
   spbtn.addEventListener("click", function(event){
     
+    let spurl = document.getElementById(sp_url).value;
     console.log(spurl);
 
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
