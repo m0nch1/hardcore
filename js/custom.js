@@ -88,7 +88,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   spbtn.addEventListener("click", function(event){
     
     let spurl = document.getElementById('sp_url').value;
-    console.log(spurl);
+
+    spurl = 'spotify:track:' + spurl.slice(-22);
 
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
@@ -159,7 +160,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   
       play({
         playerInstance: player,
-        spotify_uri: 'spotify:track:4ykXvy9fdC8sowUXD9Q1Bp',
+        spotify_uri: spurl,
       });
   
     });
