@@ -86,10 +86,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   var _token;
 
-  console.log(_token);
-
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
+    
+    console.log(_token);
 
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
