@@ -87,7 +87,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   let spimport = document.getElementById(sp_send);
   sp_send.addEventListener("click", function(event){
 
-    pausebtn.setAttribute("src" , "img/Orion_play.png");
+    pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
 
     const hash = window.location.hash
@@ -173,9 +173,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     pausebtn.addEventListener("click", function(event){
 
-      console.log(state);
+      let statechk = pausebtn.getAttribute('src');
 
-      if (state.paused) {
+      console.log(statechk);
+
+      if (statechk === 'img/Orion_play.png') {
         player.resume().then(() => {
           pausebtn.setAttribute("src" , "img/Orion_pause.png");
         });
@@ -184,7 +186,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
           pausebtn.setAttribute("src" , "img/Orion_play.png");
         });
       }
-      isPlay = !isPlay;
     });
 
   });
