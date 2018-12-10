@@ -84,8 +84,11 @@ animationId = requestAnimationFrame(render);
 
 window.onSpotifyWebPlaybackSDKReady = () => {
 
-  let spimport = document.getElementById(sp_send);
-  sp_send.addEventListener("click", function(event){
+  let spbtn = document.getElementById(sp_btn);
+  let spurl = document.getElementById(sp_url).value;
+  spbtn.addEventListener("click", function(event){
+    
+    console.log(spurl);
 
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
@@ -164,7 +167,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.connect();
   
     player.on('player_state_changed', state => {
-      console.log(state)
       document.getElementById('lpimg').setAttribute("src" , state.track_window.current_track.album.images[0].url);
       let srcpath = document.getElementById('lpimg').getAttribute('src');
       document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
@@ -174,8 +176,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     pausebtn.addEventListener("click", function(event){
 
       let statechk = pausebtn.getAttribute('src');
-
-      console.log(statechk);
 
       if (statechk === 'img/Orion_play.png') {
         player.resume().then(() => {
