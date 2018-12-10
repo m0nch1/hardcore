@@ -86,9 +86,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   let login_sp = dosument.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
-    
-    let spurl = document.getElementById('sp_url').value;
-    spurl = 'spotify:track:' + spurl.slice(-22);
 
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
@@ -128,6 +125,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   let spbtn = document.getElementById('sp_btn');
   spbtn.addEventListener("click", function(event){
+
+    let spurl = document.getElementById('sp_url').value;
+    spurl = 'spotify:track:' + spurl.slice(-22);
     
     let player = new Spotify.Player({
       name: 'A Spotify Web SDK Player',
