@@ -92,6 +92,8 @@ var _token;
 window.onSpotifyWebPlaybackSDKReady = () => {
   
   let login_sp = document.getElementById('sptfy');
+  let mtrigger = document.querySelector('#trigger');
+
   login_sp.addEventListener("click", function(event){
     
     const authEndpoint = 'https://accounts.spotify.com/authorize';
@@ -104,7 +106,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       'app-remote-control'
     ];
     
-    let mtrigger = document.querySelector('#trigger');
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
     
@@ -144,6 +145,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   spbtn.addEventListener("click", function(event){
 
     audioTag.removeAttribute('src');
+    mtrigger.checked = false;
 
     let spurl = document.getElementById('sp_url').value;
     spurl = 'spotify:track:' + spurl.slice(-22);
@@ -186,7 +188,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       });
   
     });
-
     
     player.connect();
     
