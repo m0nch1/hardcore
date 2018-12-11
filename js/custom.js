@@ -97,13 +97,13 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   login_sp.addEventListener("click", function(event){
     
     let modal = document.querySelector('.modal_overlay');
-
     
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
     
     if (!_token) {
       modal.style.opacity = 0;
+    }
       
       const hash = window.location.hash
       .substring(1)
@@ -118,8 +118,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       window.location.hash = '';
       
       // Set token
+      if (!_token) {
       _token = hash.access_token;
-    }
+      }
       
       const authEndpoint = 'https://accounts.spotify.com/authorize';
       
