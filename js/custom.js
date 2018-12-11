@@ -87,8 +87,6 @@ animationId = requestAnimationFrame(render);
 
 //https://spotify-web-playback.glitch.me/#
 
-var _token;
-
 window.onSpotifyWebPlaybackSDKReady = () => {
 
   let login_sp = document.getElementById('sptfy');
@@ -99,10 +97,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
     
-    if (!_token) {
-      modal.style.opacity = 0;
-    }
-      
+    // if (!_token) {
+    //   modal.style.opacity = 0;
+    // }
+
       const hash = window.location.hash
       .substring(1)
       .split('&')
@@ -113,11 +111,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
         return initial;
       }, {});
+
+      console.log(hash);
+      //window.location.hash = '';
+      
       // Set token
-      if (!_token) {
-      window.location.hash = '';
-      _token = hash.access_token;
-      }
+      var _token = hash.access_token;
       
       const authEndpoint = 'https://accounts.spotify.com/authorize';
       
