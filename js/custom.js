@@ -87,6 +87,8 @@ animationId = requestAnimationFrame(render);
 
 //https://spotify-web-playback.glitch.me/#
 
+var _token;
+
 window.onSpotifyWebPlaybackSDKReady = () => {
 
   let login_sp = document.getElementById('sptfy');
@@ -116,7 +118,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       //window.location.hash = '';
       
       // Set token
-      var _token = hash.access_token;
+      _token = hash.access_token;
       
       const authEndpoint = 'https://accounts.spotify.com/authorize';
       
