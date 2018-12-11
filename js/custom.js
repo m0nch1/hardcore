@@ -1,4 +1,5 @@
 let source, animationId;
+const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext;
 
 let analyser = audioContext.createAnalyser();
@@ -24,24 +25,28 @@ function execDrop(e) {
   e.stopPropagation();
   e.preventDefault();
 
-  pausebtn.setAttribute("src" , "img/Orion_play.png");
-
-  let files = e.dataTransfer.files;
-  let mimecheck = files[0].type;
-
-  if (mimecheck.startsWith('audio')) {
-    pausebtn.style.display = "inline";
-    document.getElementById('output').innerHTML = files[0].name;
-    let audiourl = URL.createObjectURL(files[0]);
-    audioTag.setAttribute("src" , audiourl);
+  audioContext.resume().then(() => {
+    console.log('Playback resumed successfully');
+  });
+    
+    pausebtn.setAttribute("src" , "img/Orion_play.png");
+    
+    let files = e.dataTransfer.files;
+    let mimecheck = files[0].type;
+    
+    if (mimecheck.startsWith('audio')) {
+      pausebtn.style.display = "inline";
+      document.getElementById('output').innerHTML = files[0].name;
+      let audiourl = URL.createObjectURL(files[0]);
+      audioTag.setAttribute("src" , audiourl);
+    }
   }
-}
-
-let isPlay = false;
-
-pausebtn.addEventListener("click", function(event){
-  if (!isPlay) {
-    audioTag.play();
+  
+  let isPlay = false;
+  
+  pausebtn.addEventListener("click", function(event){
+    if (!isPlay) {
+      audioTag.play();
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
   } else {
     audioTag.pause();
@@ -88,6 +93,12 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
+    
+    let modal = document.querySelector('.modal_overlay');
+
+    if (!_token) {
+      modal.style.opacity = 0;
+    }
 
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
@@ -103,7 +114,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       return initial;
     }, {});
     window.location.hash = '';
-
+    
     // Set token
     _token = hash.access_token;
 
