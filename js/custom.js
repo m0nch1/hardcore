@@ -89,50 +89,45 @@ animationId = requestAnimationFrame(render);
 
 var _token;
 
-
 window.onSpotifyWebPlaybackSDKReady = () => {
   
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
     
-    console.log(_token);
-    
-    let modal = document.querySelector('.modal_overlay');
-    
-    pausebtn.setAttribute("src" , "img/Orion_pause.png");
-    pausebtn.style.display = "inline";
-    
-      const hash = window.location.hash
-      .substring(1)
-      .split('&')
-      .reduce(function (initial, item) {
-        if (item) {
-          let parts = item.split('=');
-          initial[parts[0]] = decodeURIComponent(parts[1]);
-        }
-        return initial;
-      }, {});
-
-      //window.location.hash = '';
-
-      if (!hash.access_token) {
-        modal.style.opacity = 0;
-      }
-      
-      // Set token
-      _token = hash.access_token;
-      
-      const authEndpoint = 'https://accounts.spotify.com/authorize';
-      
-      // Replace with your app's client ID, redirect URI and desired scopes
-      const clientId = '285998fe3500467bb715878d0a767dbf';
-      const redirectUri = 'https://m0nch1.github.io/visual-mv/';
-      const scopes = [
+    const authEndpoint = 'https://accounts.spotify.com/authorize';
+    const clientId = '285998fe3500467bb715878d0a767dbf';
+    const redirectUri = 'https://m0nch1.github.io/visual-mv/';
+    const scopes = [
       'streaming',
       'user-read-private',
       'user-modify-playback-state',
       'app-remote-control'
     ];
+    
+    let modal = document.querySelector('.modal_overlay');
+    pausebtn.setAttribute("src" , "img/Orion_pause.png");
+    pausebtn.style.display = "inline";
+    
+    const hash = window.location.hash
+    .substring(1)
+    .split('&')
+    .reduce(function (initial, item) {
+      if (item) {
+        let parts = item.split('=');
+        initial[parts[0]] = decodeURIComponent(parts[1]);
+      }
+      return initial;
+    }, {});
+
+    
+    if (!hash.access_token) {
+      modal.style.opacity = 0;
+    }
+    
+    // Set token
+    _token = hash.access_token;
+
+    // window.location.hash = '';
 
     // If there is no token, redirect to Spotify authorization
     if (!_token) {
