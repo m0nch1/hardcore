@@ -108,24 +108,29 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
     
-    const hash = window.location.hash
-    .substring(1)
-    .split('&')
-    .reduce(function (initial, item) {
-      if (item) {
-        let parts = item.split('=');
-        initial[parts[0]] = decodeURIComponent(parts[1]);
-      }
-      return initial;
-    }, {});
+    const hash;
 
-    
-    if (!hash.access_token) {
+    if (!_token){
+      hash = window.location.hash
+      .substring(1)
+      .split('&')
+      .reduce(function (initial, item) {
+        if (item) {
+          let parts = item.split('=');
+          initial[parts[0]] = decodeURIComponent(parts[1]);
+        }
+        return initial;
+      }, {});
       modal.style.opacity = 0;
+      _token = hash.access_token;
+    } else {
+      window.location.hash = '';
     }
     
-    // Set token
-    _token = hash.access_token;
+
+    // if (!hash.access_token) {
+      
+    // }
 
     // window.location.hash = '';
 
