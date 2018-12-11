@@ -89,20 +89,19 @@ animationId = requestAnimationFrame(render);
 
 var _token;
 
-window.onSpotifyWebPlaybackSDKReady = () => {
 
+window.onSpotifyWebPlaybackSDKReady = () => {
+  
   let login_sp = document.getElementById('sptfy');
   login_sp.addEventListener("click", function(event){
+    
+    console.log(_token);
     
     let modal = document.querySelector('.modal_overlay');
     
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
     
-    // if (!_token) {
-    //   modal.style.opacity = 0;
-    // }
-
       const hash = window.location.hash
       .substring(1)
       .split('&')
@@ -114,8 +113,11 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         return initial;
       }, {});
 
-      console.log(hash);
       //window.location.hash = '';
+
+      if (!hash.access_token) {
+        modal.style.opacity = 0;
+      }
       
       // Set token
       _token = hash.access_token;
