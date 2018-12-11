@@ -89,8 +89,6 @@ animationId = requestAnimationFrame(render);
 
 var _token;
 
-console.log(_token);
-
 window.onSpotifyWebPlaybackSDKReady = () => {
 
   let login_sp = document.getElementById('sptfy');
@@ -115,10 +113,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
         return initial;
       }, {});
-      window.location.hash = '';
-      
       // Set token
       if (!_token) {
+      window.location.hash = '';
       _token = hash.access_token;
       }
       
