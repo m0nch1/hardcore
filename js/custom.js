@@ -104,7 +104,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       'app-remote-control'
     ];
     
-    let modal = document.querySelector('.modal_overlay');
+    let mtrigger = document.querySelector('#trigger');
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
     
@@ -121,7 +121,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
         return initial;
       }, {});
-      modal.style.opacity = 0;
+      mtrigger.checked = false;
       _token = hash.access_token;
     } else {
       window.location.hash = '';
