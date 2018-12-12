@@ -180,7 +180,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       });
   
     });
-    player.resume();
+    player.pause();
     
     player.connect();
     
