@@ -133,6 +133,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
   });
 
+  let player = new Spotify.Player({
+    name: 'A Spotify Web SDK Player',
+    getOAuthToken: callback => {
+      callback(_token);
+    },
+    volume: 1
+  });
+
   let spbtn = document.getElementById('sp_btn');
   spbtn.addEventListener("click", function(event){
 
@@ -142,17 +150,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     let spurl = document.getElementById('sp_url').value;
     spurl = 'spotify:track:' + spurl.slice(-22);
     
-    let player = new Spotify.Player({
-      name: 'A Spotify Web SDK Player',
-      getOAuthToken: callback => {
-        callback(_token);
-      },
-      volume: 1
-    });
 
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
-      player.pause();
   
       const play = ({
         spotify_uri,
@@ -191,8 +191,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
       document.getElementById('output').innerHTML = state.track_window.current_track.name;
     });
-
-    player.pause();
     
     pausebtn.addEventListener("click", function(event){
       
