@@ -142,8 +142,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     
     let spurl = document.getElementById('sp_url').value;
     spurl = 'spotify:track:' + spurl.slice(-22);
-
-    console.log(player);
     
     let player = new Spotify.Player({
       name: 'A Spotify Web SDK Player',
@@ -151,6 +149,21 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         callback(_token);
       },
       volume: 1
+    });
+
+    player.getCurrentState().then(state => {
+      if (!state) {
+        console.error('User is not playing music through the Web Playback SDK');
+        return;
+      }
+    
+      let {
+        current_track,
+        next_tracks: [next_track]
+      } = state.track_window;
+    
+      console.log('Currently Playing', current_track);
+      console.log('Playing Next', next_track);
     });
 
     player.addListener('ready', ({ device_id }) => {
