@@ -151,21 +151,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       volume: 1
     });
 
-    player.getCurrentState().then(state => {
-      if (!state) {
-        console.error('User is not playing music through the Web Playback SDK');
-        return;
-      }
-    
-      let {
-        current_track,
-        next_tracks: [next_track]
-      } = state.track_window;
-    
-      console.log('Currently Playing', current_track);
-      console.log('Playing Next', next_track);
-    });
-
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
   
@@ -205,6 +190,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       let srcpath = document.getElementById('lpimg').getAttribute('src');
       document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
       document.getElementById('output').innerHTML = state.track_window.current_track.name;
+    });
+
+    player.getCurrentState().then(state => {
+      if (!state) {
+        console.error('User is not playing music through the Web Playback SDK');
+        return;
+      }
+
+      player.pause();
+      player.resume();
+      // let {
+      //   current_track,
+      //   next_tracks: [next_track]
+      // } = state.track_window;
+    
+      // console.log('Currently Playing', current_track);
+      // console.log('Playing Next', next_track);
     });
     
     pausebtn.addEventListener("click", function(event){
