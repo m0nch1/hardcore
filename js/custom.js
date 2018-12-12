@@ -125,17 +125,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       mtrigger.checked = false;
       _token = hash.access_token;
     } else {
-      //window.location.hash = '';
+      window.location.hash = '';
     }
-    
 
-    // if (!hash.access_token) {
-      
-    // }
-
-    // window.location.hash = '';
-
-    // If there is no token, redirect to Spotify authorization
     if (!_token) {
       window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
     }
