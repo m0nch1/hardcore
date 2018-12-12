@@ -125,7 +125,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       mtrigger.checked = false;
       _token = hash.access_token;
     } else {
-      window.location.hash = '';
+      //window.location.hash = '';
     }
     
 
