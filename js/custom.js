@@ -183,6 +183,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.pause();
     
     player.connect();
+
+    player.pause();
     
     player.on('player_state_changed', state => {
       console.log(state);
@@ -191,6 +193,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
       document.getElementById('output').innerHTML = state.track_window.current_track.name;
     });
+
+    player.pause();
     
     pausebtn.addEventListener("click", function(event){
       
