@@ -109,7 +109,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     pausebtn.setAttribute("src" , "img/Orion_pause.png");
     pausebtn.style.display = "inline";
     
-    const hash = window.location.hash
+    var hash;
+
+    if (!_token){
+      hash = window.location.hash
       .substring(1)
       .split('&')
       .reduce(function (initial, item) {
@@ -119,20 +122,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
         return initial;
       }, {});
-      
-      //window.location.hash = '';
-      
-      if (!hash.access_token) {
-        mtrigger.checked = false;
-      }
-      
+      mtrigger.checked = false;
       _token = hash.access_token;
+    } else {
+      //window.location.hash = '';
+    }
+    
+
+    // if (!hash.access_token) {
+      
+    // }
+
+    // window.location.hash = '';
 
     // If there is no token, redirect to Spotify authorization
     if (!_token) {
       window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
     }
-    
   });
 
   let spbtn = document.getElementById('sp_btn');
