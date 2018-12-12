@@ -185,14 +185,16 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.connect();
 
     player.on('player_state_changed', state => {
-      console.log(state);
+      if (!state.paused){
+        login_sp.style.display = "none";
+      } else {
+        login_sp.style.display = "inline";
+      }
       document.getElementById('lpimg').setAttribute("src" , state.track_window.current_track.album.images[0].url);
       let srcpath = document.getElementById('lpimg').getAttribute('src');
       document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
       document.getElementById('output').innerHTML = state.track_window.current_track.name;
     });
-
-    login_sp.style.display = "none";
     
     pausebtn.addEventListener("click", function(event){
       
@@ -201,12 +203,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       if (statechk === 'img/Orion_play.png') {
         player.resume().then(() => {
           pausebtn.setAttribute("src" , "img/Orion_pause.png");
-          login_sp.style.display = "none";
         });
       } else {
         player.pause().then(() => {
           pausebtn.setAttribute("src" , "img/Orion_play.png");
-          login_sp.style.display = "inline";
         });
       }
     });
