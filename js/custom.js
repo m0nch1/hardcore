@@ -152,6 +152,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
+      player.pause();
   
       const play = ({
         spotify_uri,
@@ -180,11 +181,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       });
   
     });
-    player.pause();
     
     player.connect();
-
-    player.pause();
     
     player.on('player_state_changed', state => {
       console.log(state);
