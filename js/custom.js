@@ -191,6 +191,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
       document.getElementById('output').innerHTML = state.track_window.current_track.name;
     });
+
+    login_sp.style.display = "none";
     
     pausebtn.addEventListener("click", function(event){
       
