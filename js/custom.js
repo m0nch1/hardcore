@@ -151,6 +151,23 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       volume: 1
     });
 
+    player.getCurrentState().then(state => {
+      if (!state) {
+        console.error('User is not playing music through the Web Playback SDK');
+        return;
+      }
+
+      player.pause();
+      player.resume();
+      // let {
+      //   current_track,
+      //   next_tracks: [next_track]
+      // } = state.track_window;
+    
+      // console.log('Currently Playing', current_track);
+      // console.log('Playing Next', next_track);
+    });
+
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
   
@@ -181,16 +198,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       });
   
     });
-    
-    player.connect();
-    
-    player.on('player_state_changed', state => {
-      console.log(state);
-      document.getElementById('lpimg').setAttribute("src" , state.track_window.current_track.album.images[0].url);
-      let srcpath = document.getElementById('lpimg').getAttribute('src');
-      document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
-      document.getElementById('output').innerHTML = state.track_window.current_track.name;
-    });
 
     player.getCurrentState().then(state => {
       if (!state) {
@@ -208,6 +215,34 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       // console.log('Currently Playing', current_track);
       // console.log('Playing Next', next_track);
     });
+    
+    player.connect();
+    
+    player.getCurrentState().then(state => {
+      if (!state) {
+        console.error('User is not playing music through the Web Playback SDK');
+        return;
+      }
+
+      player.pause();
+      player.resume();
+      // let {
+      //   current_track,
+      //   next_tracks: [next_track]
+      // } = state.track_window;
+    
+      // console.log('Currently Playing', current_track);
+      // console.log('Playing Next', next_track);
+    });
+
+    player.on('player_state_changed', state => {
+      console.log(state);
+      document.getElementById('lpimg').setAttribute("src" , state.track_window.current_track.album.images[0].url);
+      let srcpath = document.getElementById('lpimg').getAttribute('src');
+      document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
+      document.getElementById('output').innerHTML = state.track_window.current_track.name;
+    });
+
     
     pausebtn.addEventListener("click", function(event){
       
