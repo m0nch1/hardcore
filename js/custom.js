@@ -141,8 +141,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     let spurl = document.getElementById('sp_url').value;
     spurl = 'spotify:track:' + spurl.slice(-22);
-
-    let state;
     
     let player = new Spotify.Player({
       name: 'A Spotify Web SDK Player',
@@ -151,12 +149,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       },
       volume: 1
     });
-    
-    if (!state.paused){
-      player.pause().then(() => {
-        pausebtn.setAttribute("src" , "img/Orion_play.png");
-      });
-    }
 
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
@@ -188,6 +180,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       });
   
     });
+    player.resume();
     
     player.connect();
     
