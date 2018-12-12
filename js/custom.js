@@ -112,6 +112,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     var hash;
 
     if (!_token){
+      mtrigger.checked = false;
       hash = window.location.hash
       .substring(1)
       .split('&')
@@ -122,7 +123,6 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
         return initial;
       }, {});
-      mtrigger.checked = false;
       _token = hash.access_token;
     } else {
       window.location.hash = '';
@@ -133,23 +133,25 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     }
   });
 
-  let player = new Spotify.Player({
-    name: 'A Spotify Web SDK Player',
-    getOAuthToken: callback => {
-      callback(_token);
-    },
-    volume: 1
-  });
-
+  
   let spbtn = document.getElementById('sp_btn');
   spbtn.addEventListener("click", function(event){
-
+    
     audioTag.removeAttribute('src');
     mtrigger.checked = false;
-
+    
     let spurl = document.getElementById('sp_url').value;
     spurl = 'spotify:track:' + spurl.slice(-22);
+
+    console.log(player);
     
+    let player = new Spotify.Player({
+      name: 'A Spotify Web SDK Player',
+      getOAuthToken: callback => {
+        callback(_token);
+      },
+      volume: 1
+    });
 
     player.addListener('ready', ({ device_id }) => {
       console.log('Ready with Device ID', device_id);
