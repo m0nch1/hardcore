@@ -83,6 +83,36 @@ render = function(){
   animationId = requestAnimationFrame(render);
 };
 
+const spectrumsRange = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+sprender = function(){
+  
+  let spectrums = new Array(64);
+  
+  for(let i=0; i<65; i++){
+      spectrums[i] = spectrumsRange(0, 100);
+  }
+　
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+  for(let i=0; i<65; i++){
+    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    if (i%3 === 0) {
+      canvasContext.fillRect(i*10, 80, 4, spectrums[i]/6);
+      canvasContext.fillRect(i*10, 70, 4, 10);
+      canvasContext.fillRect(i*10, 70, 4, -(spectrums[i]/6));
+    } else if (i%5 === 0) {
+      canvasContext.fillRect(i*10, 80, 4, spectrums[i]/2);
+      canvasContext.fillRect(i*10, 70, 4, 10);
+      canvasContext.fillRect(i*10, 70, 4, -(spectrums[i]/2));
+    } else {
+      canvasContext.fillRect(i*10, 80, 4, spectrums[i]/5);
+      canvasContext.fillRect(i*10, 70, 4, 10);
+      canvasContext.fillRect(i*10, 70, 4, -(spectrums[i]/5));
+    }
+  }
+  animationId = requestAnimationFrame(sprender);
+};
+
 animationId = requestAnimationFrame(render);
 
 //https://spotify-web-playback.glitch.me/#
@@ -144,7 +174,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     spurl = 'spotify:track:' + spurl.slice(-22);
     
     let player = new Spotify.Player({
-      name: 'A Spotify Web SDK Player',
+      name: 'particle music player🌟',
       getOAuthToken: callback => {
         callback(_token);
       },
@@ -187,8 +217,10 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     player.on('player_state_changed', state => {
       if (!state.paused){
         login_sp.style.display = "none";
+        animationId = requestAnimationFrame(sprender);
       } else {
         login_sp.style.display = "inline";
+        animationId = requestAnimationFrame(render);
       }
       document.getElementById('lpimg').setAttribute("src" , state.track_window.current_track.album.images[0].url);
       let srcpath = document.getElementById('lpimg').getAttribute('src');
