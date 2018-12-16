@@ -29,28 +29,30 @@ function execDrop(e) {
     console.log('Playback resumed successfully');
   });
     
-    pausebtn.setAttribute("src" , "img/Orion_play.png");
+    pausebtn.setAttribute('src' , 'img/Orion_play.png');
     
     let files = e.dataTransfer.files;
     let mimecheck = files[0].type;
     
     if (mimecheck.startsWith('audio')) {
-      pausebtn.style.display = "inline";
+      pausebtn.style.display = 'inline';
       document.getElementById('output').innerHTML = files[0].name;
       let audiourl = URL.createObjectURL(files[0]);
-      audioTag.setAttribute("src" , audiourl);
+      audioTag.setAttribute('src' , audiourl);
+      document.querySelector('body').style.backgroundImage = 'url(../img/landscape.jpg)'; 
+      document.getElementById('lpimg').setAttribute('src' , '../img/lpimg.jpg');
     }
   }
   
   let isPlay = false;
   
-  pausebtn.addEventListener("click", function(event){
+  pausebtn.addEventListener('click', function(event){
     if (!isPlay) {
       audioTag.play();
-    pausebtn.setAttribute("src" , "img/Orion_pause.png");
+    pausebtn.setAttribute('src' , 'img/Orion_pause.png');
   } else {
     audioTag.pause();
-    pausebtn.setAttribute("src" , "img/Orion_play.png");
+    pausebtn.setAttribute('src' , 'img/Orion_play.png');
   }
   isPlay = !isPlay;
 });
@@ -124,7 +126,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
   let login_sp = document.getElementById('sptfy');
   let mtrigger = document.querySelector('#trigger');
 
-  login_sp.addEventListener("click", function(event){
+  login_sp.addEventListener('click', function(event){
     
     const authEndpoint = 'https://accounts.spotify.com/authorize';
     const clientId = '285998fe3500467bb715878d0a767dbf';
@@ -136,8 +138,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
       'app-remote-control'
     ];
     
-    pausebtn.setAttribute("src" , "img/Orion_pause.png");
-    pausebtn.style.display = "inline";
+    pausebtn.setAttribute('src' , 'img/Orion_pause.png');
+    pausebtn.style.display = 'inline';
     
     var hash;
 
@@ -165,7 +167,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
   
   let spbtn = document.getElementById('sp_btn');
-  spbtn.addEventListener("click", function(event){
+  spbtn.addEventListener('click', function(event){
     
     audioTag.removeAttribute('src');
     mtrigger.checked = false;
@@ -216,29 +218,29 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 
     player.on('player_state_changed', state => {
       if (!state.paused){
-        login_sp.style.display = "none";
+        login_sp.style.display = 'none';
         animationId = requestAnimationFrame(sprender);
       } else {
-        login_sp.style.display = "inline";
+        login_sp.style.display = 'inline';
         animationId = requestAnimationFrame(render);
       }
-      document.getElementById('lpimg').setAttribute("src" , state.track_window.current_track.album.images[0].url);
+      document.getElementById('lpimg').setAttribute('src' , state.track_window.current_track.album.images[0].url);
       let srcpath = document.getElementById('lpimg').getAttribute('src');
       document.querySelector('body').style.backgroundImage = 'url(' + srcpath + ')'; 
       document.getElementById('output').innerHTML = state.track_window.current_track.name;
     });
     
-    pausebtn.addEventListener("click", function(event){
+    pausebtn.addEventListener('click', function(event){
       
       let statechk = pausebtn.getAttribute('src');
       
       if (statechk === 'img/Orion_play.png') {
         player.resume().then(() => {
-          pausebtn.setAttribute("src" , "img/Orion_pause.png");
+          pausebtn.setAttribute('src' , 'img/Orion_pause.png');
         });
       } else {
         player.pause().then(() => {
-          pausebtn.setAttribute("src" , "img/Orion_play.png");
+          pausebtn.setAttribute('src' , 'img/Orion_play.png');
         });
       }
     });
