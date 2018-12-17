@@ -12,6 +12,8 @@ gainNode.connect(analyser);
 let audioTag = document.getElementById('usermusic');
 let pausebtn = document.getElementById('mplaypause')
 
+let player;
+
 source = audioContext.createMediaElementSource(audioTag);
 source.connect(gainNode);
 
@@ -28,6 +30,8 @@ function execDrop(e) {
   audioContext.resume().then(() => {
     console.log('Playback resumed successfully');
   });
+
+  player.disconnect();
     
     pausebtn.setAttribute('src' , 'img/Orion_play.png');
     
@@ -175,7 +179,7 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     let spurl = document.getElementById('sp_url').value;
     spurl = 'spotify:track:' + spurl.slice(-22);
     
-    let player = new Spotify.Player({
+    player = new Spotify.Player({
       name: 'particle music player🌟',
       getOAuthToken: callback => {
         callback(_token);
