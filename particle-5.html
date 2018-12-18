@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
-    <title>ガイド線表示</title>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+    <title>パウダースノー作戦</title>
 </head>
 <body>
 
@@ -47,7 +48,31 @@
         let axisHelper = new THREE.AxisHelper(width); // サイズ
         scene.add(axisHelper);
 
-        renderer.render(scene, camera);
+         // コントロールカメラ
+        let controlCamera = new THREE.PerspectiveCamera(35, width / height, 1, 6000);
+        controlCamera.position.set(0, 500, 1600);
+        let controls = new THREE.OrbitControls(controlCamera);
+
+        let geometry = new THREE.PlaneGeometry( 200, 200 );
+        let material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+        let plane = new THREE.Mesh( geometry, material );
+        scene.add( plane );
+        
+        tick();
+
+        function tick() {
+
+          plane.rotation.y += 0.1;
+          plane.rotation.x += 0.1;
+          plane.rotation.z += 0.1;
+
+          plane.position.x += 1;
+          plane.position.y += 1;
+          plane.position.z += 1;
+
+          renderer.render(scene, controlCamera);
+          requestAnimationFrame(tick);
+        }
 
       }
     </script>

@@ -117,8 +117,6 @@ sprender = function(){
 
 animationId = requestAnimationFrame(render);
 
-//https://spotify-web-playback.glitch.me/#
-
 var _token;
 
 window.onSpotifyWebPlaybackSDKReady = () => {

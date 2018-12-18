@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.min.js"></script>
-    <title>ガイド線表示</title>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+    <title>薄っぺらい四角い紙作成</title>
 </head>
 <body>
 
@@ -47,7 +48,22 @@
         let axisHelper = new THREE.AxisHelper(width); // サイズ
         scene.add(axisHelper);
 
-        renderer.render(scene, camera);
+         // コントロールカメラ
+        let controlCamera = new THREE.PerspectiveCamera(35, width / height, 1, 6000);
+        controlCamera.position.set(0, 500, 1600);
+        let controls = new THREE.OrbitControls(controlCamera);
+
+        let geometry = new THREE.PlaneGeometry( 200, 200 );
+        let material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+        let plane = new THREE.Mesh( geometry, material );
+        scene.add( plane );
+        
+        tick();
+
+        function tick() {
+          renderer.render(scene, controlCamera);
+          requestAnimationFrame(tick);
+        }
 
       }
     </script>
