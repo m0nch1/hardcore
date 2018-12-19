@@ -96,7 +96,7 @@ section{
     position: fixed;
     top: 10px;
     right: 10px;
-    z-index: 100;
+    z-index: 999;
 }
 
 .audios img{
@@ -124,7 +124,7 @@ canvas {
     height: 100%;
     position: absolute;
     top: 0;
-    z-index: 999;
+    z-index: 300;
 }
 
 .canbox{
