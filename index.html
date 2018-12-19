@@ -82,13 +82,13 @@
         const scene = new THREE.Scene();
 
         // カメラを作成
-        const camera = new THREE.PerspectiveCamera(70, width / height, 1, 6000);
+        const camera = new THREE.PerspectiveCamera(70, width / height, 1, 1000);
         camera.position.set(0, 300, 2500);
         camera.lookAt(scene.position);
 
         const X_SIZE = window.innerWidth;
         const Y_SIZE = window.innerHeight;
-        const LENGTH = 80;
+        const LENGTH = 100;
         const PLANE_SCALE = 5;
 
         const plane = [];
@@ -119,10 +119,17 @@
 
         let rot = 0; 
         let mouseX = 0; 
+        let Posi = 0;
 
         document.addEventListener("mousemove", (event) => {mouseX = event.pageX;});
 
         tick();
+
+        if(navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)){
+            Posi = 500;
+        }else{
+            Posi = 800;
+        }
 
         function tick() {
 
@@ -130,8 +137,8 @@
             rot += (targetRot - rot) * 0.01;
             const radian = rot * Math.PI / 180;
             
-            camera.position.x = 1000 * Math.sin(radian);
-            camera.position.z = 1000 * Math.cos(radian);
+            camera.position.x = Posi * Math.sin(radian);
+            camera.position.z = Posi * Math.cos(radian);
             
             camera.lookAt(new THREE.Vector3(0, 0, 0));
 
