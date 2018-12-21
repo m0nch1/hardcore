@@ -60,19 +60,19 @@
         
         tick();
 
-        function tick() {
+function tick() {
 
-          plane.rotation.y += 0.1;
-          plane.rotation.x += 0.1;
-          plane.rotation.z += 0.1;
+  plane.rotation.y += 0.1;
+  plane.rotation.x += 0.1;
+  plane.rotation.z += 0.1;
 
-          plane.position.x += 1;
-          plane.position.y += 1;
-          plane.position.z += 1;
+  plane.position.x += 1;
+  plane.position.y += 1;
+  plane.position.z += 1;
 
-          renderer.render(scene, controlCamera);
-          requestAnimationFrame(tick);
-        }
+  renderer.render(scene, controlCamera);
+  requestAnimationFrame(tick);
+}
 
       }
     </script>

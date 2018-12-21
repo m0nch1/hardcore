@@ -218,8 +218,8 @@ canvas {
 
 /* animation */
 @keyframes horizontal {
-    0% { -webkit-transform:translateX( -8px); }
-  100% { -webkit-transform:translateX(  0px); }
+    0% { transform:translateX( -8px); }
+  100% { transform:translateX(  0px); }
 }
 @-webkit-keyframes horizontal {
     0% { -webkit-transform:translateX( -8px); }
@@ -227,8 +227,8 @@ canvas {
 }
 
 @keyframes vertical {
-    0% { -webkit-transform:translate(-50%,-50%); }
-  100% { -webkit-transform:translate(-50%,-55%); }
+    0% { transform:translate(-50%,-50%); }
+  100% { transform:translate(-50%,-55%); }
 }
 @-webkit-keyframes vertical {
     0% { -webkit-transform:translate(-50%,-50%); }
