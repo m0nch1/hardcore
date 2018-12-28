@@ -15,6 +15,22 @@ let pausebtn = document.getElementById('mplaypause')
 source = audioContext.createMediaElementSource(audioTag);
 source.connect(gainNode);
 
+var sampleImage = 'https://i.scdn.co/image/32958eed299ebd4fe557a13fac6f038f3e8a3091';
+
+var test = document.getElementById('lpimg');
+
+RGBaster.colors(sampleImage, {
+  exclude: [ 'rgb(0,0,0)' ],
+  success: function(payload) {
+    // You now have the payload.
+    console.log(payload.dominant);
+    console.log(payload.secondary);
+    console.log(payload.palette);
+    
+    document.getElementById('output').style.color = payload.dominant;
+  }
+});
+
 function handleDragOver(e) {
   e.stopPropagation();
   e.preventDefault();
