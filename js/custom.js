@@ -15,8 +15,9 @@ let pausebtn = document.getElementById('mplaypause')
 source = audioContext.createMediaElementSource(audioTag);
 source.connect(gainNode);
 
-var sampleImage = 'https://i.scdn.co/image/32958eed299ebd4fe557a13fac6f038f3e8a3091';
+//var sampleImage = 'https://i.scdn.co/image/32958eed299ebd4fe557a13fac6f038f3e8a3091';
 
+var sampleImage = ''
 var test = document.getElementById('lpimg');
 
 RGBaster.colors(sampleImage, {
