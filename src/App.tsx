@@ -36,10 +36,10 @@ const App: React.FC<Props> = (props) => {
       <CssBaseline />
       <Container maxWidth={false}>
         <Grid container spacing={3} className={classes.gridRoot}>
-          <Grid item sm={6}>
+          <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>ジャケ</Paper>
           </Grid>
-          <Grid item sm={6}>
+          <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>曲名</Paper>
           </Grid>
         </Grid>
