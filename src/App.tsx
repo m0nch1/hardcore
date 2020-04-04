@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) =>
       backgroundSize: "130em auto",
     },
     gridRoot: {
-      margin: 0,
+      margin: "0 auto",
+      width: "100%",
     },
     paper: {
       padding: theme.spacing(2),
