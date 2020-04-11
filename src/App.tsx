@@ -104,15 +104,6 @@ const App: React.FC<Props> = (props) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-<<<<<<< Updated upstream
-      <Container maxWidth={false}>
-        <Grid container spacing={3} className={classes.gridRoot}>
-          <Grid item sm={6}>
-            <Paper className={classes.paper}>ジャケ</Paper>
-          </Grid>
-          <Grid item sm={6}>
-            <Paper className={classes.paper}>曲名</Paper>
-=======
       <Container maxWidth={false} className={classes.container}>
         <Grid container spacing={3} className={classes.gridContainer}>
           <Grid
@@ -142,7 +133,6 @@ const App: React.FC<Props> = (props) => {
               </p>
               <p>This is awesome song</p>
             </div>
->>>>>>> Stashed changes
           </Grid>
         </Grid>
       </Container>
