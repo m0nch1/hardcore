@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) =>
       backgroundPosition: "center center",
       backgroundAttachment: "fixed",
       backgroundSize: "cover",
+      overflow: "hidden",
     },
     container: {
       height: "100%",
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) =>
       boxShadow: "0px 0px 25px 5px",
     },
     card: {
-      borderBottom: "3px dotted",
+      borderBottom: "0.3vw dashed",
       textAlign: "center",
       color: "white",
       fontSize: "3vw",
@@ -50,34 +51,32 @@ const useStyles = makeStyles((theme) =>
       fontWeight: "bold",
     },
     leftIn: {
-      position: "relative",
-      animation: "$left-in 3s ease-in-out 0s",
-      // animationDuration: "3s",
-      // animationTimingFunction: "ease-in-out",
-      // animationDelay: "0s",
+      animationName: "$left-in",
+      animationDuration: "3s",
+      animationTimingFunction: "ease-in-out",
+      animationDelay: "0s",
     },
     rightIn: {
-      position: "relative",
-      animation: "$right-in 3s ease-in-out 0s",
-      // animationDuration: "3s",
-      // animationDelay: "0s",
-      // animationTimingFunction: "ease-in-out",
+      animationName: "$right-in",
+      animationDuration: "3s",
+      animationDelay: "0s",
+      animationTimingFunction: "ease-in-out",
     },
     horizontal: {
-      animation: "$horizontal 1.5s ease-in-out 0s alternate infinite",
-      // animationDuration: "1.5s",
-      // animationDelay: "0s",
-      // animationTimingFunction: "ease-in-out",
-      // animationDirection: "alternate",
-      // animationIterationCount: "infinite",
+      animationName: "$horizontal",
+      animationDuration: "1.5s",
+      animationDelay: "0s",
+      animationTimingFunction: "ease-in-out",
+      animationDirection: "alternate",
+      animationIterationCount: "infinite",
     },
     vertical: {
-      animation: "$vertical 1s ease-in-out 0s alternate infinite",
-      // animationDuration: "1s",
-      // animationDelay: "0s",
-      // animationTimingFunction: "ease-in-out",
-      // animationDirection: "alternate",
-      // animationIterationCount: "infinite",
+      animationName: "$vertical",
+      animationDuration: "1s",
+      animationDelay: "0s",
+      animationTimingFunction: "ease-in-out",
+      animationDirection: "alternate",
+      animationIterationCount: "infinite",
     },
     "@keyframes left-in": {
       from: { left: "-30%" },
@@ -92,8 +91,8 @@ const useStyles = makeStyles((theme) =>
       to: { transform: "translateX(  0px)" },
     },
     "@keyframes vertical": {
-      from: { transform: "translate(-50%,-50%)" },
-      to: { transform: "translate(-50%,-55%)" },
+      from: { transform: "translateY(-5%)" },
+      to: { transform: "translateY(5%)" },
     },
   })
 );
@@ -105,14 +104,18 @@ const App: React.FC<Props> = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <Container maxWidth={false} className={classes.container}>
-        <Grid container spacing={3} className={classes.gridContainer}>
+        <Grid
+          container
+          spacing={3}
+          className={`${classes.gridContainer} ${classes.horizontal}`}
+        >
           <Grid
             item
             xs={12}
             sm={6}
-            className={(classes.gridItem, classes.leftIn, classes.horizontal)}
+            className={`${classes.gridItem} ${classes.leftIn}`}
           >
-            <div className={classes.jacketImgWrap}>
+            <div className={`${classes.jacketImgWrap} ${classes.vertical}`}>
               <img
                 className={classes.jacketImg}
                 src="../img/lpimg.jpg"
@@ -124,7 +127,7 @@ const App: React.FC<Props> = (props) => {
             item
             xs={12}
             sm={6}
-            className={(classes.gridItem, classes.rightIn, classes.horizontal)}
+            className={`${classes.gridItem} ${classes.rightIn}`}
           >
             <div className={classes.card}>
               <p>You Are Listening to</p>
