@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) =>
       boxShadow: "0px 0px 25px 5px",
     },
     card: {
+      fontFamily: "'Contrail One', cursive",
       borderBottom: "0.3vw dashed",
       textAlign: "center",
       color: "white",
@@ -79,11 +80,11 @@ const useStyles = makeStyles((theme) =>
       animationIterationCount: "infinite",
     },
     "@keyframes left-in": {
-      from: { left: "-30%" },
+      from: { left: "-50%" },
       to: { left: "0" },
     },
     "@keyframes right-in": {
-      from: { right: "-700px" },
+      from: { right: "-50%" },
       to: { right: "0" },
     },
     "@keyframes horizontal": {
