@@ -30,13 +30,16 @@ const useStyles = makeStyles((theme) =>
     },
     gridItem: {
       width: "50%",
+      height: "50%",
       position: "relative",
+      display: "inline-flex",
+      alignItems: "center",
     },
     jacketImgWrap: {
       top: "50%",
       left: "50%",
       width: "50%",
-      margin: "0 auto",
+      margin: "auto",
     },
     jacketImg: {
       width: "100%",
@@ -44,12 +47,28 @@ const useStyles = makeStyles((theme) =>
     },
     card: {
       fontFamily: "'Contrail One', cursive",
+      width: "100%",
       borderBottom: "0.3vw dashed",
       textAlign: "center",
       color: "white",
       fontSize: "3vw",
       lineHeight: "0.4em",
       fontWeight: "bold",
+    },
+    centerBar: {
+      height: "4px",
+      width: "40%",
+      position: "absolute",
+      right: "0",
+      left: "0",
+      backgroundColor: "#fff",
+      border: "0",
+      visibility: "hidden",
+      animationName: "$line-fade",
+      animationDuration: "2s",
+      animationDelay: "3s",
+      animationFillMode: "forwards",
+      animationPlayState: "running",
     },
     leftIn: {
       animationName: "$left-in",
@@ -95,6 +114,16 @@ const useStyles = makeStyles((theme) =>
       from: { transform: "translateY(-5%)" },
       to: { transform: "translateY(5%)" },
     },
+    "@keyframes line-fade": {
+      from: {
+        transform: "rotate(90deg) scaleX(0)",
+        visibility: "visible",
+      },
+      to: {
+        transform: "rotate(90deg) scaleX(1)",
+        visibility: "visible",
+      },
+    },
   })
 );
 
@@ -124,6 +153,7 @@ const App: React.FC<Props> = (props) => {
               />
             </div>
           </Grid>
+          <hr className={classes.centerBar} />
           <Grid
             item
             xs={12}
