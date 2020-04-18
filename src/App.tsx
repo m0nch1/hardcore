@@ -1,176 +1,167 @@
 import React from "react";
+import styled, { keyframes } from "styled-components";
 import { CssBaseline, Container, Grid } from "@material-ui/core";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
 import "./App.css";
 
 interface Props {}
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      height: "100vh",
-      backgroundColor: "#546788",
-      backgroundImage: "url('../img/landscape.jpg')",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center center",
-      backgroundAttachment: "fixed",
-      backgroundSize: "cover",
-      overflow: "hidden",
-    },
-    container: {
-      height: "100%",
-      backdropFilter: "blur(5px)",
-      display: "flex",
-    },
-    gridContainer: {
-      margin: "0 auto",
-      width: "100%",
-      alignItems: "center",
-    },
-    gridItem: {
-      width: "50%",
-      height: "50%",
-      position: "relative",
-      display: "inline-flex",
-      alignItems: "center",
-    },
-    jacketImgWrap: {
-      top: "50%",
-      left: "50%",
-      width: "50%",
-      margin: "auto",
-    },
-    jacketImg: {
-      width: "100%",
-      boxShadow: "0px 0px 25px 5px",
-    },
-    card: {
-      fontFamily: "'Contrail One', cursive",
-      width: "100%",
-      borderBottom: "0.3vw dashed",
-      textAlign: "center",
-      color: "white",
-      fontSize: "3vw",
-      lineHeight: "0.4em",
-      fontWeight: "bold",
-    },
-    centerBar: {
-      height: "4px",
-      width: "40%",
-      position: "absolute",
-      right: "0",
-      left: "0",
-      backgroundColor: "#fff",
-      border: "0",
-      visibility: "hidden",
-      animationName: "$line-fade",
-      animationDuration: "2s",
-      animationDelay: "3s",
-      animationFillMode: "forwards",
-      animationPlayState: "running",
-    },
-    leftIn: {
-      animationName: "$left-in",
-      animationDuration: "3s",
-      animationTimingFunction: "ease-in-out",
-      animationDelay: "0s",
-    },
-    rightIn: {
-      animationName: "$right-in",
-      animationDuration: "3s",
-      animationDelay: "0s",
-      animationTimingFunction: "ease-in-out",
-    },
-    horizontal: {
-      animationName: "$horizontal",
-      animationDuration: "1.5s",
-      animationDelay: "0s",
-      animationTimingFunction: "ease-in-out",
-      animationDirection: "alternate",
-      animationIterationCount: "infinite",
-    },
-    vertical: {
-      animationName: "$vertical",
-      animationDuration: "1s",
-      animationDelay: "0s",
-      animationTimingFunction: "ease-in-out",
-      animationDirection: "alternate",
-      animationIterationCount: "infinite",
-    },
-    "@keyframes left-in": {
-      from: { left: "-50%" },
-      to: { left: "0" },
-    },
-    "@keyframes right-in": {
-      from: { right: "-50%" },
-      to: { right: "0" },
-    },
-    "@keyframes horizontal": {
-      from: { transform: "translateX( -8px)" },
-      to: { transform: "translateX(  0px)" },
-    },
-    "@keyframes vertical": {
-      from: { transform: "translateY(-5%)" },
-      to: { transform: "translateY(5%)" },
-    },
-    "@keyframes line-fade": {
-      from: {
-        transform: "rotate(90deg) scaleX(0)",
-        visibility: "visible",
-      },
-      to: {
-        transform: "rotate(90deg) scaleX(1)",
-        visibility: "visible",
-      },
-    },
-  })
-);
+const Screen = styled.div`
+  flex-grow: 1;
+  height: 100vh;
+  background-color: #546788;
+  background-image: url("../img/landscape.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  overflow: hidden;
+`;
+
+const MainContainer = styled(Container)`
+  && {
+    height: 100%;
+    backdrop-filter: blur(5px);
+    display: flex;
+  }
+`;
+
+const horizontal = keyframes`
+  from { transform: translateX( -8px); }
+  to { transform: translateX(  0px); }
+`;
+
+const GridContainer = styled(Grid)`
+  margin: 0 auto;
+  width: 100%;
+  align-items: center;
+  animation-name: ${horizontal};
+  animation-duration: 1.5s;
+  animation-delay: 0s;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+`;
+
+const GridItem = styled(Grid)`
+  width: 50%;
+  height: 50%;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+`;
+
+const leftIn = keyframes`
+  from { left: -50%; }
+  to { left: 0; }
+`;
+
+const LeftGridItem = styled(GridItem)`
+  animation-name: ${leftIn};
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+`;
+
+const rightIn = keyframes`
+  from { right: -50%; }
+  to { right: 0; }
+`;
+
+const RightGridItem = styled(GridItem)`
+  animation-name: ${rightIn};
+  animation-duration: 3s;
+  animation-delay: 0s;
+  animation-timing-function: ease-in-out;
+`;
+
+const vertical = keyframes`
+  from { transform: translateY(-5%) }
+  to { transform: translateY(5%) }
+`;
+
+const JacketImgWrap = styled.div`
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  margin: auto;
+  animation-name: ${vertical};
+  animation-duration: 1s;
+  animation-delay: 0s;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+`;
+
+const JacketImg = styled.img`
+  width: 100%;
+  box-shadow: 0px 0px 25px 5px;
+`;
+
+const lineFade = keyframes`
+  from {
+    transform: rotate(90deg) scaleX(0);
+    visibility: visible;
+  }
+  to {
+    transform: rotate(90deg) scaleX(1);
+    visibility: visible;
+  }
+`;
+
+const CenterBar = styled.hr`
+  height: 4px;
+  width: 40%;
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+  border: 0;
+  visibility: hidden;
+  animation-name: ${lineFade};
+  animation-duration: 2s;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+`;
+
+const Card = styled.div`
+  font-family: "Contrail One", cursive;
+  width: 100%;
+  border-bottom: 0.3vw dashed;
+  text-align: center;
+  color: white;
+  font-size: 3vw;
+  line-height: 0.4em;
+  font-weight: bold;
+`;
+
+// const useStyles = makeStyles((theme) => {});
 
 const App: React.FC<Props> = (props) => {
-  const classes = useStyles();
-
+  // const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <Screen>
       <CssBaseline />
-      <Container maxWidth={false} className={classes.container}>
-        <Grid
-          container
-          spacing={3}
-          className={`${classes.gridContainer} ${classes.horizontal}`}
-        >
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            className={`${classes.gridItem} ${classes.leftIn}`}
-          >
-            <div className={`${classes.jacketImgWrap} ${classes.vertical}`}>
-              <img
-                className={classes.jacketImg}
-                src="../img/lpimg.jpg"
-                alt="jacket"
-              />
-            </div>
-          </Grid>
-          <hr className={classes.centerBar} />
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            className={`${classes.gridItem} ${classes.rightIn}`}
-          >
-            <div className={classes.card}>
+      <MainContainer maxWidth={false}>
+        <GridContainer container spacing={3}>
+          <LeftGridItem item xs={12} sm={6}>
+            <JacketImgWrap>
+              <JacketImg src="../img/sample-jacket.jpg" alt="jacket" />
+            </JacketImgWrap>
+          </LeftGridItem>
+          <CenterBar />
+          <RightGridItem item xs={12} sm={6}>
+            <Card>
               <p>You Are Listening to</p>
               <p>
                 -<span>music</span>-
               </p>
               <p>This is awesome song</p>
-            </div>
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
+            </Card>
+          </RightGridItem>
+        </GridContainer>
+      </MainContainer>
+    </Screen>
   );
 };
 
