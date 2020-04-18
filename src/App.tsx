@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { CssBaseline, Container, Grid } from "@material-ui/core";
-import "./App.css";
 
 interface Props {}
 
@@ -135,10 +134,7 @@ const Card = styled.div`
   font-weight: bold;
 `;
 
-// const useStyles = makeStyles((theme) => {});
-
 const App: React.FC<Props> = (props) => {
-  // const classes = useStyles();
   return (
     <Screen>
       <CssBaseline />
