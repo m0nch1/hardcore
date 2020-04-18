@@ -2,13 +2,16 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { CssBaseline, Container, Grid } from "@material-ui/core";
 
+import landscape from "./images/landscape.jpg";
+import sampleJacket from "./images/sample-jacket.jpg";
+
 interface Props {}
 
 const Screen = styled.div`
   flex-grow: 1;
   height: 100vh;
   background-color: #546788;
-  background-image: url("../img/landscape.jpg");
+  background-image: url(${landscape});
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -142,7 +145,7 @@ const App: React.FC<Props> = (props) => {
         <GridContainer container spacing={3}>
           <LeftGridItem item xs={12} sm={6}>
             <JacketImgWrap>
-              <JacketImg src="../img/sample-jacket.jpg" alt="jacket" />
+              <JacketImg src={sampleJacket} alt="sample jacket image" />
             </JacketImgWrap>
           </LeftGridItem>
           <CenterBar />
