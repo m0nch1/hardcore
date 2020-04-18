@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { CssBaseline, Container, Grid } from "@material-ui/core";
+import { Canvas, useFrame } from "react-three-fiber";
 
 import landscape from "./images/landscape.jpg";
 import sampleJacket from "./images/sample-jacket.jpg";
@@ -137,9 +138,43 @@ const Card = styled.div`
   font-weight: bold;
 `;
 
+const Box: React.FC<Props> = (props) => {
+  const ref: any = useRef();
+  useFrame(() => (ref.current.rotation.z += 0.01));
+  return (
+    <mesh
+      ref={ref}
+      onClick={(e) => console.log("click")}
+      onPointerOver={(e) => console.log("hover")}
+      onPointerOut={(e) => console.log("unhover")}
+    >
+      <planeBufferGeometry attach="geometry" args={[1, 1]} />
+      <meshBasicMaterial
+        attach="material"
+        color="hotpink"
+        opacity={0.5}
+        transparent
+      />
+    </mesh>
+  );
+};
+
+const FixedCanvas = styled(Canvas)`
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1;
+  top: 0;
+  left: 0;
+`;
+
 const App: React.FC<Props> = (props) => {
   return (
     <Screen>
+      <FixedCanvas>
+        <Box />
+      </FixedCanvas>
+
       <CssBaseline />
       <MainContainer maxWidth={false}>
         <GridContainer container spacing={3}>
