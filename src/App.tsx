@@ -1,10 +1,20 @@
 import React, { useRef, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
-import { CssBaseline, Container, Grid } from "@material-ui/core";
+import {
+  CssBaseline,
+  Container,
+  Grid,
+  Modal,
+  Button,
+  FormControl,
+  Input,
+} from "@material-ui/core";
 import { Canvas } from "react-three-fiber";
 
 import landscape from "./images/landscape.jpg";
 import sampleJacket from "./images/sample-jacket.jpg";
+import spotifyIcon from "./images/spotify_icons/Green.png";
+
 import Particles from "./components/particles";
 
 interface Props {}
@@ -148,6 +158,76 @@ const FixedCanvas = styled(Canvas)`
   left: 0;
 `;
 
+const SpotifyButton = styled.button`
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  right: 10px;
+  appearance: none;
+  outline: none;
+  background: none;
+  border: none;
+  width: 50px;
+`;
+
+const FixedModal = styled(Modal)`
+  display: grid;
+  place-items: center;
+`;
+
+const SpotifyForm = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: white;
+  padding: 16px;
+  outline: none;
+  width: 70%;
+`;
+
+const ModalComponent = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <SpotifyButton type="button" onClick={handleOpen}>
+        <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
+      </SpotifyButton>
+      <FixedModal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <SpotifyForm>
+          <h2>Play Audio via Spotify</h2>
+          <FormControl>
+            <Input
+              name="spotify_url"
+              type="text"
+              placeholder="e.g. https://open.spotify.com/track/..."
+              style={{ marginBottom: "1em" }}
+            ></Input>
+            <Button
+              variant="contained"
+              style={{ width: "200px", margin: "0 auto" }}
+            >
+              Import
+            </Button>
+          </FormControl>
+        </SpotifyForm>
+      </FixedModal>
+    </div>
+  );
+};
+
 const App: React.FC<Props> = (props) => {
   const mouse = useRef([0, 0]);
   const onMouseMove = useCallback(
@@ -161,6 +241,8 @@ const App: React.FC<Props> = (props) => {
       <FixedCanvas onMouseMove={onMouseMove}>
         <Particles count={500} mouse={mouse} />
       </FixedCanvas>
+
+      <ModalComponent></ModalComponent>
 
       <CssBaseline />
       <MainContainer maxWidth={false}>
