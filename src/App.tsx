@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useCallback } from "react";
 import styled, { keyframes } from "styled-components";
 import { CssBaseline, Container, Grid } from "@material-ui/core";
-import { Canvas, useFrame } from "react-three-fiber";
+import { Canvas } from "react-three-fiber";
 
 import landscape from "./images/landscape.jpg";
 import sampleJacket from "./images/sample-jacket.jpg";
+import Particles from "./components/particles";
 
 interface Props {}
 
@@ -138,27 +139,6 @@ const Card = styled.div`
   font-weight: bold;
 `;
 
-const Box: React.FC<Props> = (props) => {
-  const ref: any = useRef();
-  useFrame(() => (ref.current.rotation.z += 0.01));
-  return (
-    <mesh
-      ref={ref}
-      onClick={(e) => console.log("click")}
-      onPointerOver={(e) => console.log("hover")}
-      onPointerOut={(e) => console.log("unhover")}
-    >
-      <planeBufferGeometry attach="geometry" args={[1, 1]} />
-      <meshBasicMaterial
-        attach="material"
-        color="hotpink"
-        opacity={0.5}
-        transparent
-      />
-    </mesh>
-  );
-};
-
 const FixedCanvas = styled(Canvas)`
   position: fixed !important;
   width: 100% !important;
@@ -169,10 +149,17 @@ const FixedCanvas = styled(Canvas)`
 `;
 
 const App: React.FC<Props> = (props) => {
+  const mouse = useRef([0, 0]);
+  const onMouseMove = useCallback(
+    ({ clientX: x, clientY: y }) =>
+      (mouse.current = [x - window.innerWidth / 2, y - window.innerHeight / 2]),
+    []
+  );
+
   return (
     <Screen>
-      <FixedCanvas>
-        <Box />
+      <FixedCanvas onMouseMove={onMouseMove}>
+        <Particles count={500} mouse={mouse} />
       </FixedCanvas>
 
       <CssBaseline />
