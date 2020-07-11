@@ -186,6 +186,17 @@ const SpotifyForm = styled.div`
 
 const ModalComponent = () => {
   const [open, setOpen] = React.useState(false);
+  const [token, setToken] = React.useState("");
+
+  const authEndpoint = "https://accounts.spotify.com/authorize";
+  const clientId = "285998fe3500467bb715878d0a767dbf";
+  const redirectUri = "http://localhost:3000";
+  const scopes = [
+    "streaming",
+    "user-read-private",
+    "user-modify-playback-state",
+    "app-remote-control",
+  ];
 
   const handleOpen = () => {
     setOpen(true);
@@ -197,9 +208,21 @@ const ModalComponent = () => {
 
   return (
     <div>
-      <SpotifyButton type="button" onClick={handleOpen}>
-        <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
-      </SpotifyButton>
+      {!token ? (
+        <a
+          href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+            "%20"
+          )}&response_type=token&show_dialog=true`}
+        >
+          <SpotifyButton type="button">
+            <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
+          </SpotifyButton>
+        </a>
+      ) : (
+        <SpotifyButton type="button" onClick={handleOpen}>
+          <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
+        </SpotifyButton>
+      )}
       <FixedModal
         open={open}
         onClose={handleClose}
