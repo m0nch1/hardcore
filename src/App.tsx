@@ -1,5 +1,6 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState } from "react";
 import styled, { keyframes } from "styled-components";
+
 import {
   CssBaseline,
   Container,
@@ -10,12 +11,13 @@ import {
   Input,
 } from "@material-ui/core";
 import { Canvas } from "react-three-fiber";
-
 import landscape from "./images/landscape.jpg";
 import sampleJacket from "./images/sample-jacket.jpg";
 import spotifyIcon from "./images/spotify_icons/Green.png";
-
 import Particles from "./components/particles";
+
+import { parse } from "querystring";
+import { ScriptCache } from "./ScriptCache";
 
 interface Props {}
 
@@ -184,19 +186,26 @@ const SpotifyForm = styled.div`
   width: 70%;
 `;
 
-const ModalComponent = () => {
-  const [open, setOpen] = React.useState(false);
-  const [token, setToken] = React.useState("");
+const getToken = (): string => {
+  const location = parse(window.location.hash.slice(1));
+  return location.access_token ? location.access_token.toString() : "";
+};
 
+const ModalComponent = () => {
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const clientId = "285998fe3500467bb715878d0a767dbf";
   const redirectUri = "http://localhost:3000";
   const scopes = [
     "streaming",
     "user-read-private",
+    "user-read-email",
     "user-modify-playback-state",
     "app-remote-control",
   ];
+
+  const token = getToken();
+
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -259,35 +268,95 @@ const App: React.FC<Props> = (props) => {
     []
   );
 
+  const token = getToken();
+
+  const initSpotifyInstance = () => {
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      // eslint-disable-next-line no-undef
+      const player = new Spotify.Player({
+        name: "particle music player🌟",
+        getOAuthToken: (cb) => {
+          cb(token);
+        },
+      });
+
+      // Error handling
+      player.addListener("initialization_error", ({ message }) => {
+        console.error(message);
+      });
+      player.addListener("authentication_error", ({ message }) => {
+        console.error(message);
+      });
+      player.addListener("account_error", ({ message }) => {
+        console.error(message);
+      });
+      player.addListener("playback_error", ({ message }) => {
+        console.error(message);
+      });
+
+      // Playback status updates
+      player.addListener("player_state_changed", (state) => {
+        console.log(state);
+      });
+
+      // Ready
+      // eslint-disable-next-line camelcase
+      player.addListener("ready", ({ device_id }) => {
+        console.log("Ready with Device ID", device_id);
+      });
+
+      // Not Ready
+      // eslint-disable-next-line camelcase
+      player.addListener("not_ready", ({ device_id }) => {
+        console.log("Device ID has gone offline", device_id);
+      });
+
+      // Connect to the player!
+      player.connect();
+    };
+  };
+
+  if (token) {
+    // eslint-disable-next-line no-unused-vars
+    const LoadScript = new ScriptCache([
+      {
+        name: "https://sdk.scdn.co/spotify-player.js",
+        callback: initSpotifyInstance(),
+      },
+    ]);
+  }
+
   return (
-    <Screen>
-      <FixedCanvas onMouseMove={onMouseMove}>
-        <Particles count={500} mouse={mouse} />
-      </FixedCanvas>
+    <>
+      <Screen>
+        <FixedCanvas onMouseMove={onMouseMove}>
+          <Particles count={500} mouse={mouse} />
+        </FixedCanvas>
 
-      <ModalComponent></ModalComponent>
+        <ModalComponent></ModalComponent>
 
-      <CssBaseline />
-      <MainContainer maxWidth={false}>
-        <GridContainer container spacing={3}>
-          <LeftGridItem item xs={12} sm={6}>
-            <JacketImgWrap>
-              <JacketImg src={sampleJacket} alt="sample jacket image" />
-            </JacketImgWrap>
-          </LeftGridItem>
-          <CenterBar />
-          <RightGridItem item xs={12} sm={6}>
-            <Card>
-              <p>You Are Listening to</p>
-              <p>
-                -<span>music</span>-
-              </p>
-              <p>This is awesome song</p>
-            </Card>
-          </RightGridItem>
-        </GridContainer>
-      </MainContainer>
-    </Screen>
+        <CssBaseline />
+        <MainContainer maxWidth={false}>
+          <GridContainer container spacing={3}>
+            <LeftGridItem item xs={12} sm={6}>
+              <JacketImgWrap>
+                <JacketImg src={sampleJacket} alt="sample jacket image" />
+              </JacketImgWrap>
+            </LeftGridItem>
+            <CenterBar />
+            <RightGridItem item xs={12} sm={6}>
+              <Card>
+                <p>You Are Listening to</p>
+                <p>
+                  -<span>music</span>-
+                </p>
+                <p>This is awesome song</p>
+              </Card>
+            </RightGridItem>
+          </GridContainer>
+        </MainContainer>
+      </Screen>
+    </>
   );
 };
 
