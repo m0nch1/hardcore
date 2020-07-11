@@ -19,7 +19,11 @@ import Particles from "./components/particles";
 import { parse } from "querystring";
 import { ScriptCache } from "./ScriptCache";
 
-interface Props {}
+interface Props { }
+
+interface SProps {
+  onSubmitURL: (spotifyUrl: string) => void;
+}
 
 const Screen = styled.div`
   flex-grow: 1;
@@ -191,7 +195,7 @@ const getToken = (): string => {
   return location.access_token ? location.access_token.toString() : "";
 };
 
-const ModalComponent = () => {
+const ModalComponent: React.FC<SProps> = (props) => {
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const clientId = "285998fe3500467bb715878d0a767dbf";
   const redirectUri = "http://localhost:3000";
@@ -206,6 +210,7 @@ const ModalComponent = () => {
   const token = getToken();
 
   const [open, setOpen] = useState(false);
+  const [spotifyUrl, setSpotifyUrl] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -213,6 +218,10 @@ const ModalComponent = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleImport = (spotify_url: string) => {
+    props.onSubmitURL(spotify_url);
   };
 
   return (
@@ -228,10 +237,10 @@ const ModalComponent = () => {
           </SpotifyButton>
         </a>
       ) : (
-        <SpotifyButton type="button" onClick={handleOpen}>
-          <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
-        </SpotifyButton>
-      )}
+          <SpotifyButton type="button" onClick={handleOpen}>
+            <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
+          </SpotifyButton>
+        )}
       <FixedModal
         open={open}
         onClose={handleClose}
@@ -242,12 +251,17 @@ const ModalComponent = () => {
           <h2>Play Audio via Spotify</h2>
           <FormControl>
             <Input
+              value={spotifyUrl}
+              onChange={(event) => {
+                setSpotifyUrl(event.target.value);
+              }}
               name="spotify_url"
               type="text"
               placeholder="e.g. https://open.spotify.com/track/..."
               style={{ marginBottom: "1em" }}
             ></Input>
             <Button
+              onClick={(e) => handleImport(spotifyUrl)}
               variant="contained"
               style={{ width: "200px", margin: "0 auto" }}
             >
@@ -268,12 +282,16 @@ const App: React.FC<Props> = (props) => {
     []
   );
 
+  let player: Spotify.SpotifyPlayer;
+  const playMusic = (spotifyUrl: string) => {
+    console.log(spotifyUrl);
+  };
   const token = getToken();
 
   const initSpotifyInstance = () => {
     window.onSpotifyWebPlaybackSDKReady = () => {
       // eslint-disable-next-line no-undef
-      const player = new Spotify.Player({
+      player = new Spotify.Player({
         name: "particle music player🌟",
         getOAuthToken: (cb) => {
           cb(token);
@@ -333,7 +351,7 @@ const App: React.FC<Props> = (props) => {
           <Particles count={500} mouse={mouse} />
         </FixedCanvas>
 
-        <ModalComponent></ModalComponent>
+        <ModalComponent onSubmitURL={playMusic}></ModalComponent>
 
         <CssBaseline />
         <MainContainer maxWidth={false}>
