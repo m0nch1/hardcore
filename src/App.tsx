@@ -10,6 +10,8 @@ import {
   FormControl,
   Input,
 } from "@material-ui/core";
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import { Canvas } from "react-three-fiber";
 import landscape from "./images/landscape.jpg";
 import sampleJacket from "./images/sample-jacket.jpg";
@@ -19,7 +21,7 @@ import Particles from "./components/particles";
 import { parse } from "querystring";
 import { ScriptCache } from "./ScriptCache";
 
-interface Props { }
+interface Props {}
 
 interface SProps {
   onSubmitURL: (spotifyUrl: string) => void;
@@ -164,16 +166,18 @@ const FixedCanvas = styled(Canvas)`
   left: 0;
 `;
 
-const SpotifyButton = styled.button`
+const MenuButtons = styled.div`
   position: fixed;
   z-index: 100;
   top: 10px;
   right: 10px;
+`;
+
+const SpotifyButton = styled.button`
   appearance: none;
   outline: none;
   background: none;
   border: none;
-  width: 50px;
 `;
 
 const FixedModal = styled(Modal)`
@@ -220,8 +224,9 @@ const ModalComponent: React.FC<SProps> = (props) => {
     setOpen(false);
   };
 
-  const handleImport = (spotify_url: string) => {
-    props.onSubmitURL(spotify_url);
+  const handleImport = (spotifyUrl: string) => {
+    props.onSubmitURL(spotifyUrl);
+    handleClose();
   };
 
   return (
@@ -232,15 +237,19 @@ const ModalComponent: React.FC<SProps> = (props) => {
             "%20"
           )}&response_type=token&show_dialog=true`}
         >
-          <SpotifyButton type="button">
-            <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
-          </SpotifyButton>
+          <MenuButtons>
+            <SpotifyButton type="button">
+              <img src={spotifyIcon} alt="spotifyのアイコン" width="40px" />
+            </SpotifyButton>
+          </MenuButtons>
         </a>
       ) : (
+        <MenuButtons>
           <SpotifyButton type="button" onClick={handleOpen}>
-            <img src={spotifyIcon} alt="spotifyのアイコン" width="100%" />
+            <img src={spotifyIcon} alt="spotifyのアイコン" width="40px" />
           </SpotifyButton>
-        )}
+        </MenuButtons>
+      )}
       <FixedModal
         open={open}
         onClose={handleClose}
