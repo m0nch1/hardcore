@@ -294,6 +294,7 @@ const App: React.FC<Props> = (props) => {
   const token = getToken();
   const [player, setPlayer] = useState<Spotify.SpotifyPlayer | undefined>();
   const [deviceId, setDeviceId] = useState("");
+  const [playState, setPlayState] = useState(false);
 
   const playMusic = (spotifyUrl: string) => {
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
@@ -304,10 +305,25 @@ const App: React.FC<Props> = (props) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    setPlayState(true);
   };
 
-  const getPlayer = () => {
-    console.log(player);
+  const pauseMusic = () => {
+    if (player !== undefined) {
+      player.pause().then(() => {
+        console.log("Paused!");
+        setPlayState(false);
+      });
+    }
+  };
+
+  const resumeMusic = () => {
+    if (player !== undefined) {
+      player.resume().then(() => {
+        console.log("Resumed!");
+        setPlayState(true);
+      });
+    }
   };
 
   const initSpotifyInstance = () => {
@@ -319,6 +335,7 @@ const App: React.FC<Props> = (props) => {
           getOAuthToken: (cb) => {
             cb(token);
           },
+          volume: 0.5,
         });
         setPlayer(splayer);
         console.log(splayer);
@@ -339,7 +356,7 @@ const App: React.FC<Props> = (props) => {
 
         // Playback status updates
         player.addListener("player_state_changed", (state) => {
-          console.log(state);
+          // console.log(state);
         });
 
         // Ready
@@ -378,6 +395,22 @@ const App: React.FC<Props> = (props) => {
           <Particles count={500} mouse={mouse} />
         </FixedCanvas>
 
+        {playState ? (
+          <PauseCircleOutlineIcon
+            style={{ fontSize: 40, position: "fixed", zIndex: 99999 }}
+            onClick={() => {
+              pauseMusic();
+            }}
+          />
+        ) : (
+          <PlayCircleOutlineIcon
+            style={{ fontSize: 40, position: "fixed", zIndex: 99999 }}
+            onClick={() => {
+              resumeMusic();
+            }}
+          />
+        )}
+
         <ModalComponent onSubmitURL={playMusic}></ModalComponent>
 
         <CssBaseline />
@@ -392,13 +425,6 @@ const App: React.FC<Props> = (props) => {
             <RightGridItem item xs={12} sm={6}>
               <Card>
                 <p>You Are Listening to</p>
-                <button
-                  onClick={() => {
-                    getPlayer();
-                  }}
-                >
-                  Player
-                </button>
                 <p>
                   -<span>music</span>-
                 </p>
