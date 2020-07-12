@@ -282,11 +282,20 @@ const App: React.FC<Props> = (props) => {
     []
   );
 
-  let player: Spotify.SpotifyPlayer;
-  const playMusic = (spotifyUrl: string) => {
-    console.log(spotifyUrl);
-  };
   const token = getToken();
+  let player: Spotify.SpotifyPlayer;
+  const [deviceId, setDeviceId] = useState("");
+
+  const playMusic = (spotifyUrl: string) => {
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+      method: "PUT",
+      body: JSON.stringify({ uris: [spotifyUrl] }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
 
   const initSpotifyInstance = () => {
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -320,6 +329,7 @@ const App: React.FC<Props> = (props) => {
       // Ready
       // eslint-disable-next-line camelcase
       player.addListener("ready", ({ device_id }) => {
+        setDeviceId(device_id);
         console.log("Ready with Device ID", device_id);
       });
 
