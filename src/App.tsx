@@ -283,7 +283,7 @@ const App: React.FC<Props> = (props) => {
   );
 
   const token = getToken();
-  let player: Spotify.SpotifyPlayer;
+  const [player, setPlayer] = useState<Spotify.SpotifyPlayer | undefined>();
   const [deviceId, setDeviceId] = useState("");
 
   const playMusic = (spotifyUrl: string) => {
@@ -297,50 +297,58 @@ const App: React.FC<Props> = (props) => {
     });
   };
 
+  const getPlayer = () => {
+    console.log(player);
+  };
+
   const initSpotifyInstance = () => {
     window.onSpotifyWebPlaybackSDKReady = () => {
       // eslint-disable-next-line no-undef
-      player = new Spotify.Player({
-        name: "particle music player🌟",
-        getOAuthToken: (cb) => {
-          cb(token);
-        },
-      });
+      if (player === undefined) {
+        const splayer = new Spotify.Player({
+          name: "particle music player🌟",
+          getOAuthToken: (cb) => {
+            cb(token);
+          },
+        });
+        setPlayer(splayer);
+        console.log(splayer);
+      } else {
+        // Error handling
+        player.addListener("initialization_error", ({ message }) => {
+          console.error(message);
+        });
+        player.addListener("authentication_error", ({ message }) => {
+          console.error(message);
+        });
+        player.addListener("account_error", ({ message }) => {
+          console.error(message);
+        });
+        player.addListener("playback_error", ({ message }) => {
+          console.error(message);
+        });
 
-      // Error handling
-      player.addListener("initialization_error", ({ message }) => {
-        console.error(message);
-      });
-      player.addListener("authentication_error", ({ message }) => {
-        console.error(message);
-      });
-      player.addListener("account_error", ({ message }) => {
-        console.error(message);
-      });
-      player.addListener("playback_error", ({ message }) => {
-        console.error(message);
-      });
+        // Playback status updates
+        player.addListener("player_state_changed", (state) => {
+          console.log(state);
+        });
 
-      // Playback status updates
-      player.addListener("player_state_changed", (state) => {
-        console.log(state);
-      });
+        // Ready
+        // eslint-disable-next-line camelcase
+        player.addListener("ready", ({ device_id }) => {
+          setDeviceId(device_id);
+          console.log("Ready with Device ID", device_id);
+        });
 
-      // Ready
-      // eslint-disable-next-line camelcase
-      player.addListener("ready", ({ device_id }) => {
-        setDeviceId(device_id);
-        console.log("Ready with Device ID", device_id);
-      });
+        // Not Ready
+        // eslint-disable-next-line camelcase
+        player.addListener("not_ready", ({ device_id }) => {
+          console.log("Device ID has gone offline", device_id);
+        });
 
-      // Not Ready
-      // eslint-disable-next-line camelcase
-      player.addListener("not_ready", ({ device_id }) => {
-        console.log("Device ID has gone offline", device_id);
-      });
-
-      // Connect to the player!
-      player.connect();
+        // Connect to the player!
+        player.connect();
+      }
     };
   };
 
@@ -375,6 +383,13 @@ const App: React.FC<Props> = (props) => {
             <RightGridItem item xs={12} sm={6}>
               <Card>
                 <p>You Are Listening to</p>
+                <button
+                  onClick={() => {
+                    getPlayer();
+                  }}
+                >
+                  Player
+                </button>
                 <p>
                   -<span>music</span>-
                 </p>
