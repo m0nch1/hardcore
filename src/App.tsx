@@ -21,8 +21,6 @@ import Particles from "./components/particles";
 import { parse } from "querystring";
 import { ScriptCache } from "./ScriptCache";
 
-interface Props {}
-
 interface SProps {
   onSubmitURL: (spotifyUrl: string) => void;
 }
@@ -199,7 +197,7 @@ const getToken = (): string => {
   return location.access_token ? location.access_token.toString() : "";
 };
 
-const ModalComponent: React.FC<SProps> = (props) => {
+const ModalComponent = (props: SProps) => {
   const authEndpoint = "https://accounts.spotify.com/authorize";
   const clientId = "285998fe3500467bb715878d0a767dbf";
   const redirectUri = "http://localhost:3000";
@@ -270,7 +268,7 @@ const ModalComponent: React.FC<SProps> = (props) => {
               style={{ marginBottom: "1em" }}
             ></Input>
             <Button
-              onClick={(e) => handleImport(spotifyUrl)}
+              onClick={() => handleImport(spotifyUrl)}
               variant="contained"
               style={{ width: "200px", margin: "0 auto" }}
             >
@@ -283,7 +281,7 @@ const ModalComponent: React.FC<SProps> = (props) => {
   );
 };
 
-const App: React.FC<Props> = (props) => {
+const App = () => {
   const mouse = useRef([0, 0]);
   const onMouseMove = useCallback(
     ({ clientX: x, clientY: y }) =>
